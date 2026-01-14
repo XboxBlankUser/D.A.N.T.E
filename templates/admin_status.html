@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>ESTADO DEL SISTEMA</h1>
+    
+    <div style="display:flex; gap:20px; text-align:left;">
+        
+        <div style="flex:1; background:#111; padding:20px; border:1px solid #333;">
+            <h3 style="color:#00ffcc">CASILLEROS</h3>
+            <ul style="list-style:none; padding:0;">
+                {% for k,v in lockers.items() %}
+                <li style="margin-bottom:5px; border-bottom:1px solid #222;">
+                    <strong style="color: #fff;">#{{k}}:</strong> 
+                    <span style="{{ 'color:#666' if v=='Nadie' else 'color:#ffff00' }}">{{ v }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div style="flex:1; background:#111; padding:20px; border:1px solid #333;">
+            <h3 style="color:#ff3333">ADMINS</h3>
+            <ul style="list-style:none; padding:0;">
+                {% for user, val in admins.items() %}
+                <li>{{ user }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <br>
+    <a href="/admin/menu" class="btn">VOLVER</a>
+{% endblock %}

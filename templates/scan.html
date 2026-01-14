@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>ESCANEO BIOMETRICO</h1>
+    <h2 id="status">BUSCANDO ROSTRO...</h2>
+    
+    <div class="scan-box">
+        <img src="{{ url_for('video_feed') }}" width="640" height="480">
+        <div class="scan-line"></div>
+    </div>
+    
+    <script>
+        // Polling para preguntar al servidor si ya reconocio a alguien
+        const role = "{{ role }}";
+        setInterval(function(){
+            fetch('/api/check_face')
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === "found") {
+                    document.getElementById('status').innerText = "IDENTIFICADO: " + data.user;
+                    document.getElementById('status').style.color = "#00ffcc";
+                    setTimeout(() => {
+                        window.location.href = "/auth_success/" + role;
+                    }, 1000);
+                }
+            });
+        }, 1000); // Revisar cada 1 segundo
+    </script>
+    
+    <br>
+    <a href="/" class="btn btn-danger">CANCELAR</a>
+{% endblock %}

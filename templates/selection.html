@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>IDENTIFICACION</h1>
+    <h2>Seleccione acceso:</h2>
+    
+    <div class="menu-container">
+        <a href="/scan/client" class="btn">
+            <img src="{{ url_for('static', filename='icons/locker.png') }}">
+            CLIENTE
+        </a>
+        <a href="/scan/admin" class="btn btn-danger">
+            ADMINISTRADOR
+        </a>
+    </div>
+    
+    <br><br>
+    
+    <div class="menu-container" style="gap: 15px;">
+        {% if not is_admin %}
+        <a href="/register/admin_start" class="btn" style="border-color: #555; color: #888; font-size: 0.8em; min-height: 50px; min-width: 150px;">
+            REGISTRAR ADMIN
+        </a>
+        {% endif %}
+        
+        <a href="/" class="btn" style="border-color: #555; color: #888; font-size: 0.8em; min-height: 50px; min-width: 150px;">
+            CANCELAR
+        </a>
+    </div>
+{% endblock %}

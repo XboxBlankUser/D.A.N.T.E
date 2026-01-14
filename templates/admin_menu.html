@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 style="color: #ff3333;">PANEL ADMIN</h1>
+    <h2>{{ user }}</h2>
+    
+    <div class="menu-container">
+        <a href="/admin/credits/select" class="btn">
+            <img src="{{ url_for('static', filename='icons/coins.gif') }}">
+            CARGAR CREDITOS
+        </a>
+        <a href="/admin/card_wait/delete/0" class="btn btn-danger">
+            <img src="{{ url_for('static', filename='icons/cut_card.gif') }}">
+            ELIMINAR TARJETA
+        </a>
+        <a href="/admin/toggle_lock" class="btn" style="border-color: #f59e0b; color: #f59e0b;">
+             <img src="{{ url_for('static', filename='icons/blocked.gif') }}">
+            {% if locked %}DESBLOQUEAR{% else %}BLOQUEAR{% endif %}
+        </a>
+        <a href="/admin/status" class="btn" style="border-color: #3b82f6; color: #3b82f6;">
+            DATABASE
+        </a>
+    </div>
+
+    <br>
+    <div class="menu-container">
+        <a href="/admin/restart" class="btn btn-danger" style="border-style: dashed; min-height: 60px;">
+            RESET TOTAL
+        </a>
+        <a href="/" class="btn" style="border-color: #555; color: #888; min-height: 60px;">
+            SALIR
+        </a>
+    </div>
+{% endblock %}

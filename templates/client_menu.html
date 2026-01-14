@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 style="color: #00ffcc;">BIENVENIDO</h1>
+    <h2>{{ user }}</h2>
+    
+    <div class="menu-container">
+        <a href="/client/action/reservar" class="btn">
+            <img src="{{ url_for('static', filename='icons/flecha.gif') }}">
+            RESERVAR
+        </a>
+        <a href="/client/action/abrir" class="btn" style="border-color:#ffff00; color:#ffff00;">
+            <img src="{{ url_for('static', filename='icons/lockers.gif') }}">
+            ABRIR MIO
+        </a>
+        <a href="/client/action/liberar" class="btn" style="border-color:#fff; color:#fff;">
+            <img src="{{ url_for('static', filename='icons/flecha-animada.gif') }}">
+            DEVOLVER
+        </a>
+    </div>
+    <br>
+    <div class="menu-container">
+        <a href="/" class="btn btn-danger" style="min-height: 60px;">
+            SALIR
+        </a>
+    </div>
+{% endblock %}

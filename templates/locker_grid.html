@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>SELECCIONA CASILLERO</h1>
+    <h2>ACCION: {{ action|upper }}</h2>
+    
+    <div class="grid-lockers">
+        {% for id, owner in lockers.items() %}
+            {% set is_mine = (owner == session['user']) %}
+            {% set is_free = (owner == "Nadie") %}
+            
+            {% if action == 'reservar' %}
+                {% if is_free %}
+                    <a href="/client/process/{{action}}/{{id}}" class="btn" style="min-height: 80px; min-width: auto; font-size: 1.2em;">
+                        {{ id }}
+                    </a>
+                {% else %}
+                    <div class="btn" style="border-color:#333; color:#333; cursor:not-allowed; min-height: 80px; min-width: auto;">
+                        {{ id }}
+                    </div>
+                {% endif %}
+            {% else %}
+                {% if is_mine %}
+                    <a href="/client/process/{{action}}/{{id}}" class="btn" style="border-color:#ffff00; color:#ffff00; min-height: 80px; min-width: auto;">
+                        {{ id }}
+                    </a>
+                {% else %}
+                     <div class="btn" style="border-color:#333; color:#333; cursor:not-allowed; min-height: 80px; min-width: auto;">
+                        {{ id }}
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    <br>
+    <a href="/client/menu" class="btn btn-danger" style="min-height: 60px;">CANCELAR</a>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 style="color: #00ffcc;">PROCESO EXITOSO</h1>
+    
+    <img src="{{ url_for('static', filename='icons/push.gif') }}" style="width: 200px; margin: 30px;">
+    
+    <h2 style="font-size: 1.5em; color: white;">EMPUJE LA PUERTA {{ locker_id }}</h2>
+    
+    <p>Cerrando sesion en 4 segundos...</p>
+    
+    <script>
+        setTimeout(function(){
+            window.location.href = "/";
+        }, 4000);
+    </script>
+{% endblock %}

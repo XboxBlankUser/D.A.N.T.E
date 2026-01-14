@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% if "ERROR" in msg or "DENEGADO" in msg or "OCUPADO" in msg or "BLOQUEADO" in msg %}
+        <img src="{{ url_for('static', filename='icons/equis.gif') }}" class="big-icon">
+        <h1 style="color: #ff3333;">{{ msg }}</h1>
+    {% else %}
+        <img src="{{ url_for('static', filename='icons/check.gif') }}" class="big-icon">
+        <h1 style="color: #00ffcc;">{{ msg }}</h1>
+    {% endif %}
+
+    <h2 style="color: white;">{{ sub }}</h2>
+    
+    <p style="color: #888;">Redirigiendo...</p>
+    
+    <script>
+        setTimeout(function(){
+            window.location.href = "{{ dest }}";
+        }, 3500);
+    </script>
+    
+    <a href="{{ dest }}" class="btn" style="max-width: 300px; margin: 0 auto;">
+        CONTINUAR AHORA
+    </a>
+{% endblock %}

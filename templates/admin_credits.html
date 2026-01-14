@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+    <img src="{{ url_for('static', filename='icons/coins.gif') }}" style="width: 80px;">
+    <h1>CARGAR SALDO</h1>
+    
+    <div class="menu-container">
+        <a href="/admin/card_wait/charge/1" class="btn">1 CREDITO</a>
+        <a href="/admin/card_wait/charge/5" class="btn">5 CREDITOS</a>
+        <a href="/admin/card_wait/charge/10" class="btn">10 CREDITOS</a>
+    </div>
+    <br><br>
+    <a href="/admin/menu" class="btn btn-danger" style="min-height: 60px; border: 2px solid #ff3333;">
+        CANCELAR
+    </a>
+{% endblock %}

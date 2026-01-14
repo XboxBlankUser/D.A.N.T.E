@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>ACERQUE TARJETA</h1>
+    
+    {% if mode == 'pay' %}
+        <h2 style="color: #ffff00;">COSTO: {{ value }} CREDITO</h2>
+    {% else %}
+        <h2>ADMINISTRACION</h2>
+    {% endif %}
+
+    <img src="{{ url_for('static', filename='icons/nfc.gif') }}" class="big-icon" style="filter: invert(1);">
+    <h3 id="status" style="animation: blink 1s infinite;">ESPERANDO LECTOR...</h3>
+
+    <script>
+        const mode = "{{ mode }}";
+        const value = "{{ value }}";
+        const statusElem = document.getElementById('status');
+        let processed = false;
+
+        setInterval(function(){
+            if (processed) return;
+            fetch('/api/rfid_scan').then(r=>r.json()).then(d=>{
+                if(d.status==="found" && !processed){
+                    processed = true;
+                    statusElem.innerText = "PROCESANDO...";
+                    processCard(d.uid);
+                }
+            });
+        }, 800);
+
+        function processCard(uid) {
+            fetch('/process_card_action', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ uid: uid, mode: mode, value: value })
+            })
+            .then(res => res.json())
+            .then(resp => {
+                let color = "#00ffcc";
+                let icon = "/static/icons/check.gif";
+                let title = "ACCION COMPLETADA";
+
+                // LOGICA DE ERROR DE SALDO
+                if (resp.status === "denied") {
+                    color = "#ff3333";
+                    icon = "/static/icons/no_credit.gif";
+                    title = "ACCION DENEGADA";
+                }
+
+                document.body.innerHTML = `
+                    <style>body{background:black;color:white;text-align:center;font-family:'Courier New';display:flex;flex-direction:column;justify-content:center;height:100vh;}</style>
+                    <img src="${icon}" style="width:120px;margin:0 auto;">
+                    <h1 style="color: ${color};">${title}</h1>
+                    <h2>${resp.msg}</h2>
+                `;
+                setTimeout(() => { window.location.href = resp.redirect; }, 3500);
+            })
+            .catch(e => { statusElem.innerText = "ERROR RED"; processed=false; });
+        }
+    </script>
+    
+    <br>
+    <a href="{{ '/client/menu' if mode=='pay' else '/admin/menu' }}" class="btn btn-danger" style="min-height: 60px;">CANCELAR</a>
+{% endblock %}

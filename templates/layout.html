@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DANTE KIOSK</title>
+    <style>
+        /* --- 1. ESTRUCTURA GLOBAL (CERO SCROLL) --- */
+        html, body {
+            height: 100vh; /* 100% de la altura de la pantalla */
+            width: 100vw;  /* 100% del ancho */
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden; /* IMPORTANTE: Prohibido el scroll */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between; /* Distribuye espacio */
+        }
+
+        /* --- 2. CABECERA (Ocupa el 20% aprox) --- */
+        .header-section {
+            flex: 0 0 auto; /* No crece ni encoge arbitrariamente */
+            text-align: center;
+            padding-top: 2vh;
+            width: 100%;
+        }
+        
+        .logo-header { 
+            height: 8vh; /* La altura depende de la pantalla */
+            width: auto; 
+            margin-bottom: 1vh; 
+            filter: drop-shadow(0 0 5px #00ffcc); 
+        }
+
+        h1 { 
+            font-size: 4vh; /* Texto escala con la altura de la pantalla */
+            margin: 0; 
+            color: #00ffcc; 
+            text-transform: uppercase; 
+            text-shadow: 0 0 10px currentColor; 
+        }
+        
+        h2 { 
+            font-size: 2.5vh; 
+            color: #ccc; 
+            margin: 0.5vh 0; 
+        }
+
+        /* --- 3. CUERPO FLEXIBLE (Ocupa lo que sobre) --- */
+        .content-body {
+            flex: 1; /* Ocupa todo el espacio disponible central */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centra verticalmente el contenido */
+            align-items: center;
+            width: 100%;
+            overflow: hidden; /* Corta si es gigante */
+        }
+
+        /* --- 4. BOTONES RESPONSIVOS --- */
+        .menu-container { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 2vh; /* Espacio relativo */
+            width: 95vw; 
+        }
+
+        .btn {
+            /* Dimensiones flexibles */
+            flex: 1 1 30vw; /* Base de 30% del ancho */
+            max-width: 40vw; /* Nunca mas ancho que 40% de pantalla */
+            height: 15vh;    /* Altura fija relativa a pantalla */
+            
+            background: rgba(0, 20, 20, 0.9); 
+            border: 2px solid #00ffcc; 
+            color: #00ffcc;
+            font-size: 2.5vh; /* Texto del boton */
+            text-decoration: none;
+            border-radius: 10px; 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+        }
+        
+        .btn img { 
+            height: 50%; /* Icono ocupa mitad del boton */
+            width: auto; 
+            margin-bottom: 5px; 
+            object-fit: contain; 
+        }
+
+        .btn-danger { border-color: #ff3333; color: #ff3333; }
+
+        /* --- 5. GRID CASILLEROS (Adaptable) --- */
+        .grid-lockers { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 1vh; 
+            width: 95vw;
+            height: 60vh; /* Fuerza al grid a no pasar del 60% de altura */
+        }
+        
+        /* Forzar a los botones dentro del grid a ocupar el 100% */
+        .grid-lockers .btn {
+            width: 100% !important;
+            max-width: none !important;
+            height: 100% !important;
+            min-height: 0 !important; /* Elimina minimos fijos */
+            font-size: 3vh;
+        }
+
+        /* IMAGENES DE CAMARA O ICONOS GRANDES */
+        .big-icon { height: 15vh; width: auto; margin: 1vh auto; display: block; }
+        
+        img, video {
+            max-height: 55vh; /* Que nunca tape los botones de abajo */
+            max-width: 90vw;
+            width: auto; height: auto;
+            object-fit: contain;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header-section">
+        <img src="{{ url_for('static', filename='icons/logo.png') }}" class="logo-header">
+    </div>
+
+    <div class="content-body">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
